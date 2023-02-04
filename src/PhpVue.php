@@ -33,7 +33,7 @@ class PhpVue
 
     public function dump (): int
     {
-        return 111;
+        return 1112;
     }
 
     /**
