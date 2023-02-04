@@ -19,7 +19,7 @@ class PhpVue
         // 对此类模板后缀文件进行解析
         'view_suffix' => 'vue|js',
     ];
-    
+
 
     /**
      * 架构函数
@@ -29,6 +29,11 @@ class PhpVue
     public function __construct(array $config = [])
     {
         $this->config = array_merge($this->config, $config);
+    }
+
+    public function dump (): int
+    {
+        return 111;
     }
 
     /**
