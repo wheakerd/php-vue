@@ -12,7 +12,8 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "wheakerd\\phpvue\\": "src/"
+            "files": [],
+            "wheakerd\\": "src/"
         }
     }
 }
