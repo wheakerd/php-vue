@@ -4,6 +4,7 @@
     "license": "Apache-2.0",
     "authors": [
         {
+
             "name": "wheakerd",
             "email": "wheakerd@gmail.com"
         }
@@ -12,7 +13,6 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "files": [],
             "wheakerd\\": "src/"
         }
     }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace wheakerd\PhpVue;
+namespace wheakerd;
 
 /**
  * node、es文件免编译解析
@@ -19,7 +19,6 @@ class PhpVue
         // 对此类模板后缀文件进行解析
         'view_suffix' => 'vue|js',
     ];
-
 
     /**
      * 架构函数
