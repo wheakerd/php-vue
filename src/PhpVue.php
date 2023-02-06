@@ -32,6 +32,7 @@ class phpvue
         $this->config = array_merge($this->config, $config);
     }
 
+    
     /**
      * 模板引擎配置
      * @access public
