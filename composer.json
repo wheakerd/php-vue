@@ -9,10 +9,15 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "topthink/framework": "^6.0"
+    },
     "autoload": {
         "psr-4": {
-            "wheakerd\\": "src/"
+            "wheakerd\\phpvu\\": "src/"
         }
+    },
+    "scripts": {
+        "post-package-install": ""
     }
 }
