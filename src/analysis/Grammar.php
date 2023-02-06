@@ -9,6 +9,10 @@ namespace wheakerd\phpvue\analysis;
  */
 class Grammar
 {
+    /**
+     * 配置信息，保留
+     * @var array|string[]
+     */
     protected array $config = [
         // 解析形式支持 project single
         'engine' => 'project',
@@ -19,24 +23,14 @@ class Grammar
     ];
 
     /**
-     * script
-     * @var string
-     */
-    protected string $script = '';
-
-    /**
-     * style
-     * @var string
-     */
-    protected string $style = '';
-
-
-    /**
      * 模板数据
      * @var string
      */
     protected string $template = '';
 
+    /**
+     * @var array
+     */
     protected array $convert = [];
 
     /**
@@ -63,51 +57,57 @@ class Grammar
     }
 
     /**
-     * 
+     * @param string $template
+     * @return $this
      */
     public function handle (string $template = "")
     {
         $this->template = $template;
-        $this->import();
-        $this->script();
-        $this->template();
-        $this->style();
+        $this->import()->script()->template()->style();
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function unpack(): string
     {
         return rtrim(ltrim(implode(PHP_EOL, $this->convert)));
     }
 
-
     protected function import()
     {
-        preg_match_all('/<script[\s\S]*>\r*\n*([\s\S]*?\s*\n*export\s+default\s+{)/i', $this->template, $import);
-        $this->convert[] = end($import);
+        preg_match_all('/<script[\s\S]*>\r*\n*([\s\S]*?\s*\n*)export\s+default\s+{/i', $this->template, $import);
+        $this->convert[] = $this->endArray($import);
         return $this;
     }
 
     protected function script()
     {
-        preg_match_all('/(export\s+default\s+[a-zA-Z]*\s+{\n*\s+[\s\S]*?})\s*,?\s*\r*\n*}\s*;?\s*\r*\n*<\/script>/i', $this->template, $script);
-        $this->convert[] = end($script);
+        preg_match_all('/(export\s+default\s+[a-zA-Z\s]*?{\n*\s+[\s\S]*?)}*;?\s*\r*\n*<\/script>/i', $this->template, $script);
+        $this->convert[] = end($script[1]) ?? 'export default {';
         return $this;
     }
 
     protected function template()
     {
-        preg_match_all('/\s*\r*\n*<template>([\s\S]*)<\/template>\n*<script setup>/i', $this->template, $template);
-        $this->convert[] = $this->pattern('template:`', end($template), '`,');
+        preg_match_all('/\s*\r*\n*<template>([\s\S]*)<\/template>\r*\n*\s*<script[\s\S]*>/i', $this->template, $template);
+        if (null != $this->endArray($template)) $this->convert[] = $this->pattern('template:`', $this->endArray($template), '`,');
         return $this;
     }
 
     protected function style()
     {
         preg_match_all('/<style[\s\S]*>\r*\n*\s*([\s\S]*?)\r*\n*\s*<\/style>/i', $this->template, $style);
-        if (null != end($style)) $this->convert[] = $this->pattern('style:`', end($style), '`,');
+        if (null != $this->endArray($style)) $this->convert[] = $this->pattern('style:`', $this->endArray($style), '`,');
         $this->convert[] = '};';
         return $this;
+    }
+
+
+    public function endArray (array $array): string|null
+    {
+        return end($array[1]) ? end($array[1]) : null;
     }
 
     /**
