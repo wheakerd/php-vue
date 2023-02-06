@@ -61,6 +61,9 @@ class Grammar
         return $this;
     }
 
+    /**
+     * 
+     */
     public function handle (string $template = "")
     {
         $this->template = $template;
