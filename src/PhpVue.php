@@ -33,6 +33,7 @@ class phpvue
     }
 
     
+    
     /**
      * 模板引擎配置
      * @access public
