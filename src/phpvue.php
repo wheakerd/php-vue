@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace wheakerd\phpvue;
 
-use wheakerd\phpvu\analysis\Grammar;
+use wheakerd\phpvue\analysis\Grammar;
 
 /**
  * node、es文件免编译解析

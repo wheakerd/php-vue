@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace wheakerd\phpvu\analysis;
+namespace wheakerd\phpvue\analysis;
 
 /**
  * node、es文件免编译解析
